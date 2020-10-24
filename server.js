@@ -32,3 +32,20 @@ app.get("/dreams", (request, response) => {
 const listener = app.listen(process.env.PORT, () => {
   console.log("Your app is listening on port " + listener.address().port);
 });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const discord = require("discord.js");
+const config = require ("./config.json");
+const client = new discord.Client();
+const token = config.token
+const prefix = config.prefix
+const embed = new discord.MessageEmbed();
+var member = discord.user;
+client.login(token)
+
+
+
+
+
+
+
+

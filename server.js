@@ -64,15 +64,40 @@ client.on("preparado", () => {
 
 //////////////////c/////////////////////////////
 client.on("message", msg =>{
-  const embed = discord.MessageEmbed()
-    .setTitle("Estos son mis comandos por el momento")
-
 
 
 
 
   if (msg.content.startsWith (prefix + "help"))
-
+    msg.channel.send({embed: {
+      color: 3447003,
+      author: {
+          name: client.user.username,
+          icon_url: client.user.avatarURL()
+      },
+      title: "Comandos",
+      url: "https://github.com/CraterMaik",
+      description: "Abajo te muestro las cosas que sé haacer",
+      fields: [{
+          name: "help",
+          value: "te mostraré mis opciones para poder ayudarte"
+        },
+        {
+          name: "Campo2",
+          value: "Puedes poner [Enlaces web](https://github.com/CraterMaik) dentro del embed."
+        },
+        {
+          name: "Campo3",
+          value: "Puedes poner todos los Markdown *cursiva* **__Marcado__** dentro de un embed."
+        }
+      ],
+      timestamp: new Date(),
+      footer: {
+        icon_url: client.user.avatarURL(),
+        text: "github.com/CraterMaik"
+      }
+    }
+});
 
 
 

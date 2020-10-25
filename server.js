@@ -701,25 +701,43 @@ client.on("message", msg => {
     .slice(prefix.length)
     .trim()
     .split(/ +/g);
+  const SystemMute = new mongoose.Schema({
+    guildID: { type: String },
+    userID: { type: String },
+    rolID: { type: String },
+    time: { type: Number }
+  });
+  module.e;
   module.exports = mongoose.model("SystemMute", SystemMute);
-  const MuteDB = require("./models/SystemMute.js");
+  const MuteDB = require("./SystemMute.js");
   mongoose.connect(
     "mongodb+srv://kannohallo:<Innovando.2002>@hoffendatabase.hqous.mongodb.net/<dbname>?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true },
     () => {
       console.log("MongoDB ✔");
     }
-  );
-  if (msg.content.startsWith("h!mute")) {
+  );client.on("ready", () => {
+    setInterval(async function () { //Inicio del intervalo
+        let allData = await MuteDB.find() //Obtenemos todos los datos del modelo
+        allData.map(async a => {
+            if (a.time < Date.now()) { //Verificamos cual ya "superó" su tiempo de mute
+                let member = client.guilds.resolve(a.guildID).member(a.userID) //Obtenemos el miembro
+                member.roles.remove(a.rolID) //le quitamos el rol
+                await MuteDB.deleteOne({ userID: a.userID }) //Eliminamos el objeto de la DB
+            }
+        })
+    }, 10000)
+})
+  if (msg.content.startsWith(prefix + "mute")) {
     let user = msg.mentions.users.first(); //Establecemos la mención al usuario
     if (!user) return msg.channel.send("No user"); //Si no se menciona a un usuario retorna
     let data = MuteDB.findOne({ userID: user.id }); //"Obtenemos" el objeto si hay algo guardado
     if (data) return msg.channel.send("Usuario ya está Muteado"); //Si lo hay quiere decir que el usuario está muteado, por lo tanto el mensaje.
     let time = args[1]; //Tiempo
-    if (!time) return message.reply("No time"); //Si no introduce un tiempo
+    if (!time) return msg.reply("No time"); //Si no introduce un tiempo
     let rolMute;
-    if (message.guild.roles.cache.find(x => x.name == "Muted")) {
-      rolMute = message.guild.roles.cache.find(x => x.name == "Muted").id; //Si se encuentra un rol con el nombre Muted, re-definimos "RolMute"
+    if (msg.guild.roles.cache.find(x => x.name == "Muted")) {
+      rolMute = msg.guild.roles.cache.find(x => x.name == "Muted").id; //Si se encuentra un rol con el nombre Muted, re-definimos "RolMute"
     } else {
       //de lo contrario lo crearemos
       let a = msg.guild.roles.create({
@@ -729,16 +747,16 @@ client.on("message", msg => {
       });
       rolMute = a.id;
     }
-    message.guild.channels.cache.forEach(async channel => {
+    msg.guild.channels.cache.forEach(async channel => {
       //Esto obtendrá todos los canales del servidor y modificará los permisos del rol, denegando que envíe mensajes
       await channel.updateOverwrite(rolMute, {
         SEND_MESSAGES: false
       });
     });
-    message.guild.member(user).roles.add(rolMute); //Añadimos el rol al miembro
-    message.channel.send(`Usuario muteado por ${ms(ms(time))}`); //Mensaje de "confirmación"
+    msg.guild.member(user).roles.add(rolMute); //Añadimos el rol al miembro
+    msg.channel.send(`Usuario muteado por ${ms(ms(time))}`); //Mensaje de "confirmación"
     let wc = new MuteDB({
-      guildID: message.guild.id,
+      guildID: msg.guild.id,
       userID: user.id,
       rolID: rolMute,
       time: Date.now() + ms(time)

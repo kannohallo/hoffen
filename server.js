@@ -53,7 +53,7 @@ client.on("preparado", () => {
     "en desarollo",
     "gestionado por kanno",
     "para reportar escribe h!own",
-    "mi prefix es h!", "Estoy en" + ${client.guilds.cache.size + "servidores, genial no?."
+    "mi prefix es h!", "Estoy en" + client.guilds.cache.size + "servidores, genial no?."
   ];
   setInterval(() => {
     const index = Math.floor(Math.random() * (actividades.length - 1) + 1);
@@ -361,11 +361,29 @@ if(msg.conent.startsWith(prefix+"cry")){
 }
 });
 
+client.on("message", msg =>{
+let url = marsnpm.meme();
+if(msg.content.startsWith(prefix+"meme")){
+const embed = new discord.RichEmbed()
+  .setTitle ('${msg.author.username} aqui te traigo lo que pediste    :p')
+  .setColor("RANDOM")
+  .setTimestamp()
+    .setImage(url);
+msg.channel.send(embed)
+}})
+
+client.on("message", msg =>{
+let url = marsnpm
 
 
 
 
 
+
+
+
+
+})
 
 
 

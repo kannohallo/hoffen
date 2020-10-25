@@ -34,13 +34,13 @@ const listener = app.listen(process.env.PORT, () => {
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const discord = require("discord.js");
-const config = require ("./config.json");
+const config = require("./config.json");
 const client = new discord.Client();
-const token = config.token
-const prefix = config.prefix
+const token = config.token;
+const prefix = config.prefix;
 var member = discord.user;
 client.login(token);
-
+const embed = new discord.MessageEmbed()/
 client.on("preparado", () => {
   const actividades = [
     "en desarollo",
@@ -63,57 +63,81 @@ client.on("preparado", () => {
 });
 
 //////////////////c/////////////////////////////
-client.on("message", msg =>{
-
-
-
-
-  if (msg.content.startsWith (prefix + "help"))
-    msg.channel.send({embed: {
-      color: 3447003,
-      author: {
+client.on("message", msg => {
+  if (msg.content.startsWith(prefix + "help"))
+    msg.channel.send({
+      embed: {
+        color: 3447003,
+        author: {
           name: client.user.username,
           icon_url: client.user.avatarURL()
-      },
-      title: "Comandos",
-      url: "https://github.com/CraterMaik",
-      description: "Abajo te muestro las cosas que sé haacer",
-      fields: [{
-          name: "___help___",
-          value: "te mostraré mis opciones para poder ayudarte."
         },
-        {
-          name: "___own___",
-          value: "Te mostraré la cuenta de mi creador para que hables con el directamente." + "Puede ser para reportar bugs, como para preguntas, e incluso por si quieres charlar un rato :p"
-        },
-        {
-          name: "Campo3",
-          value: "Puedes poner todos los Markdown *cursiva* **__Marcado__** dentro de un embed."
+        title: "Comandos",
+        url: "https://github.com/CraterMaik",
+        description: "Abajo te muestro las cosas que sé haacer",
+        fields: [
+          {
+            name: "___help___",
+            value: "te mostraré mis opciones para poder ayudarte."
+          },
+          {
+            name: "___own___",
+            value:
+              "Te mostraré la cuenta de mi creador para que hables con el directamente." +
+              "Puede ser para reportar bugs, como para preguntas, e incluso por si quieres charlar un rato :p"
+          },
+          {
+            name: "Campo3",
+            value:
+              "Puedes poner todos los Markdown *cursiva* **__Marcado__** dentro de un embed."
+          }
+        ],
+        timestamp: new Date(),
+        footer: {
+          icon_url: client.user.avatarURL(),
+          text: "github.com/CraterMaik"
         }
-      ],
-      timestamp: new Date(),
-      footer: {
-        icon_url: client.user.avatarURL(),
-        text: "github.com/CraterMaik"
       }
-    }
-})
-});
-client.on("message", msg => {    
-let ping = Math.floor(msg.client.ping);
-if (msg.content.startsWith(prefix + "ping"))
-
-    msg.channel.send("Cargando...").then(m => {
-      m.edit({embed: {
-        title: "Pong!:ping_pong: ",
-        description: `Mensaje: **${Math.floor(
-          m.createdTimestamp - Date.now()
-        )}ms**, API: **${ping}ms**`
-        }});
     });
+});
+client.on("message", msg => {
+  let ping = Math.floor(msg.client.ping);
+  if (msg.content.startsWith(prefix + "ping"))
+    msg.channel.send("Cargando...").then(m => {
+      m.edit({
+        embed: {
+          title: "Pong!:ping_pong: ",
+          description: `Mensaje: **${Math.floor(
+            m.createdTimestamp - Date.now()
+          )}ms**, API: **${ping}ms**`
+        }
+      });
+    });
+});
+
+client.on("message", msg => {
+module.exports = async(client, message, args) => {
+let thumb = ["https://media.tenor.com/images/7265a624272e13d0950518a9654ce976/tenor.gif","https://media.tenor.com/images/52866345d463488b3425fb1068ac3d01/tenor.gif","https://media.tenor.com/images/ca88f916b116711c60bb23b8eb608694/tenor.gif","https://media.tenor.com/images/9fe95432f2d10d7de2e279d5c10b9b51/tenor.gif","https://media.tenor.com/images/ec5f44a6f93adfa22e36a5c78ae44cdf/tenor.gif","https://media.tenor.com/images/a9bb4d55724484be94d13dd94721a8d9/tenor.gif","https://media.tenor.com/images/2e1d34d002d73459b6119d57e6a795d6/tenor.gif"]//hacemos un let thumb para poner los posibles gifs que va a tener
+var enlace = thumb[Math.floor(Math.random() * thumb.length)]// un var enlace para poner que va a elegir uno random del let thumb
+if(msg.content.startsWith(prefix + "hug"))
+if(!message.mentions.users.first()) {
+
+message.channel.send('¡Menciona a alguien!')
+
+
+} else {//hacemos un else por si menciona a alguien
+
+let userm = message.mentions.users.first()//definimos un userm para la persona que menciono
+
+msg.channel.send({embed:{ description:"**" + message.author.username + "**" + " le dio un abrazo a " + "**" + userm.username + "**"//la descipcion si quieres puedes cambiarla
+.setColor("RANDOM")//color random
+.setImage(enlace)//aqui en imagen ponemos el var enlace
+}})
+message.channel.send({embed});
+}
+}
+
 })
-
-
 
 
 

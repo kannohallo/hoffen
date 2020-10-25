@@ -429,15 +429,26 @@ let img = await marsnpm.bienvenida(avatar, nameuser)
 
 client.on("message", msg =>{
 if(msg.content.startsWith(prefix + "avatar")){
-let avatar 
+const args = msg.content.slice(prefix.length).trim().split(/ +/g);
+let user = msg.mentions.users.first() ||
+            client.users.resolve(args[0]) ||
+            client.users.cache.find(x => (args) ? (args.join(" ") == x.tag) : undefined) ||
+            msg.author; 
+let page = !isNaN(args[1]) ?
+            args[1] :
+            1
+let avatar = user.avatarURL
 
-
-
-
-
-
-
-
+if(!user){
+msg.reply("debes mencionar a alguien, da igual si es con username o id")
+}
+else{
+const embed = new discord.RichEmbed()
+    .setTitle("aqui te traigo lo que me has solicitado")
+    .setImage(avatar)
+    .setFooter("esto ha sido solicitado por" + msg.author.username + msg.author.display.avatarURL + "espero haberte sido de ayuda n.n")
+msg.channel.send(embed)
+}
 }});
 
 

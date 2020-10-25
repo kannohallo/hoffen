@@ -79,12 +79,12 @@ client.on("message", msg =>{
       url: "https://github.com/CraterMaik",
       description: "Abajo te muestro las cosas que sé haacer",
       fields: [{
-          name: "help",
-          value: "te mostraré mis opciones para poder ayudarte"
+          name: "___help___",
+          value: "te mostraré mis opciones para poder ayudarte."
         },
         {
-          name: "Campo2",
-          value: "Puedes poner [Enlaces web](https://github.com/CraterMaik) dentro del embed."
+          name: "___own___",
+          value: "Te mostraré la cuenta de mi creador para que hables con el directamente." + "Puede ser para reportar bugs, como para preguntas, e incluso por si quieres charlar un rato :p"
         },
         {
           name: "Campo3",
@@ -97,16 +97,21 @@ client.on("message", msg =>{
         text: "github.com/CraterMaik"
       }
     }
+})
 });
+client.on("message", msg => {    
+let ping = Math.floor(msg.client.ping);
+if (msg.content.startsWith(prefix + "ping"))
 
-
-
-
-
-});
-
-
-
+    msg.channel.send("Cargando...").then(m => {
+      m.edit({embed: {
+        title: "Pong!:ping_pong: ",
+        description: `Mensaje: **${Math.floor(
+          m.createdTimestamp - Date.now()
+        )}ms**, API: **${ping}ms**`
+        }});
+    });
+})
 
 
 

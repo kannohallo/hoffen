@@ -390,11 +390,32 @@ let img = marsnpm.rip(msg.author.avatarURL)
 msg.channel.send({files: [img]})
 }});
 
+client.on("message", msg =>{
+if(msg.content.startsWith(prefix + "mask")){
+let res = marsnpm.mascara(msg.author.avatarURL)
+return msg.channel.send(res)
+}})
+
+client.on("message", msg =>{
+if(msg.content.startsWith(prefix+"suicide")){
+ let url = marsnpm.suicide
+ const embed = new discord.RichEmbed()
+  .setTitle(msg.author.username + "se ha suicidado D: ")
+  .setDescription("podras haber seguido, y sin embargo escogiste eso...")
+  .setImage(url)
+
+msg.channel.send(embed)
+}});
+
+client.on("message", msg =>{
+ if(msg.content.startsWith(prefix+"sleep")){
+  let url = marsnpm.sleep()
+  conat embed = 
 
 
 
 
-
+}})
 
 
 

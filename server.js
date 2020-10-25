@@ -5,11 +5,11 @@ const ms = require("ms");
 const MongoClient = require("mongodb").MongoClient;
 const uri =
   "mongodb+srv://kannohallo:<Innovando.2002>@hoffendatabase.hqous.mongodb.net/<dbname>?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
+const clientdb = new MongoClient(uri, { useNewUrlParser: true });
+clientdb.connect(err => {
+  const collection = clientdb.db("test").collection("devices");
   // perform actions on the collection object
-  client.close();
+  clientdb.close();
 });
 const mongoose = require("mongoose");
 mongoose.connect(
@@ -28,7 +28,7 @@ mongoose.connect(
       time: { type: Number }
     });
     module.exports = mongoose.model("SystemMute", SystemMute);
-    const MuteDB = require("./models/SystemMute.js");
+    const MuteDB = require("./SystemMute.js");
     mongoose.connect(
       "mongodb+srv://kannohallo:<Innovando.2002>@hoffendatabase.hqous.mongodb.net/<dbname>?retryWrites=true&w=majority",
       { useNewUrlParser: true, useUnifiedTopology: true },
@@ -768,6 +768,7 @@ client.on("message", msg => {
 const discord = require("discord.js");
 const config = require("./config.json");
 const prefix = config.prefix;
+const client = new discord.Client();
 client.on("message", msg => {
   if (msg.content.startsWith(prefix + "ship")) {
     let users = msg.mentions.users.first();

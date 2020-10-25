@@ -17,7 +17,8 @@
     "cheerio": "^0.22.0",
     "marsnpm": "^0.4.5",
     "mongodb": "^3.6.1",
-    "mongoose": "^5.10.10"
+    "mongoose": "^5.10.10",
+    "ms": "^2.1.2"
   },
   "engines": {
     "node": "12.x"

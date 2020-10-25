@@ -2,7 +2,7 @@
 // where your node app starts
 
 
-
+const ms = require("ms")
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://kannohallo:<Innovando.2002>@hoffendatabase.hqous.mongodb.net/<dbname>?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
@@ -10,8 +10,12 @@ client.connect(err => {
   const collection = client.db("test").collection("devices");
   // perform actions on the collection object
   client.close();
-});const mo
-
+});const mongoose = require("mongoose")
+mongoose.connect('mongodb+srv://kannohallo:<Innovando.2002>@hoffendatabase.hqous.mongodb.net/<dbname>?retryWrites=true&w=majority', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}, async(err, db) => {
+  if(err) console.log(err); else console.log('Conectado a mongodb.');
 
 const marsnpm = require ("marsnpm")
 var cheerio = require("cheerio");
@@ -564,15 +568,25 @@ if (!razon) {
 }
 });
 
+});
+
+client.on("message", msg =>{
+const SystemMute = new mongoose.Schema({
+    guildID: { type: String },
+    userID: { type: String },
+    rolID: { type: String },
+    time: { type: Number }
+});
+module.exports = mongoose.model('SystemMute', SystemMute);
+const MuteDB = require('./models/SystemMute.js');
+mongoose.connect("URL-MONGODB", { useNewUrlParser: true, useUnifiedTopology: true }, () => {
+    console.log("MongoDB ✔")
+})
 
 
 
 
-
-
-
-
-
+});
 
 
 

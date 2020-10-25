@@ -487,42 +487,43 @@ if (!msg.member.permissions.has('BAN_MEMBERS')) { //Ahora definimos las permissi
   return msg.channel.send(sinpermisos2)  //Enviamos embed de falta de permissions
 }	
 		
-     let persona = sg.mentions.users.first() ||
+     let user = msg.mentions.users.first() ||
             client.users.resolve(args[0]) ||
             client.users.cache.find(x => (args) ? (args.join(" ") == x.tag) : undefined)//Definimos "persona" que nos servira para mencionar al que queramos banear
                                                        
-	if (!persona) { // Si no mencionamos....
+	if (!user) { // Si no mencionamos....
 	
-	const sinmencionar = new Discord.MessageEmbed()
+	const sinmencionar = new discord.MessageEmbed()
 	.setTitle("ERROR")
     .setThumbnail("https://weakwifisolutions.com/wp-content/uploads/2019/08/error-red-cross-1.png?ezimgfmt=rs:372x372/rscb2/ng:webp/ngcb2")
     .setImage("https://media1.tenor.com/images/70ce41310f8a9c2a84e97b57198015d9/tenor.gif")
     .setColor("RED")
 	.setDescription("No has mencionado al usuario que quieres banear.")
 	
-	return message.channel.send(sinmencionar) //Embed de error de mencion
+	return msg.channel.send(sinmencionar) //Embed de error de mencion
 		
-	} else if(!persona.bannable){       //¿Que pasa si la persona no es baneable?
+	} else if(!user.bannable){       //¿Que pasa si la persona no es baneable?
 	
-		const sinmencionar = new Discord.MessageEmbed()
+		const sinmencionar = new discord.MessageEmbed()
 	.setTitle("ERROR")
     .setThumbnail("https://weakwifisolutions.com/wp-content/uploads/2019/08/error-red-cross-1.png?ezimgfmt=rs:372x372/rscb2/ng:webp/ngcb2")
     .setImage("https://media1.tenor.com/images/70ce41310f8a9c2a84e97b57198015d9/tenor.gif")
     .setColor("RED")
 	.setDescription("No puedo banear a esta persona.")	
 		
-	return message.channel.send(sinmencionar) //Enviamos embed de falta de mencion
+	return msg.channel.send(sinmencionar) //Enviamos embed de falta de mencion
 		
-	const jerarquia = new Discord.MessageEmbed()  //Ahora definimos lo que vendria a ser, que el rol no pueda banear si tiene un rol mas bajo que el usuario a banear
+
+		
+    }else if 
+	(user.roles.highest.comparePositionTo(msg.member.roles.highest) > 0) { 	//Definimos la jerarquia de roles
+		const mayor = new discord.MessageEmbed()  //Ahora definimos lo que vendria a ser, que el rol no pueda banear si tiene un rol mas bajo que el usuario a banear
 	.setTitle("ERROR")
     .setThumbnail("https://weakwifisolutions.com/wp-content/uploads/2019/08/error-red-cross-1.png?ezimgfmt=rs:372x372/rscb2/ng:webp/ngcb2")
     .setImage("https://media1.tenor.com/images/70ce41310f8a9c2a84e97b57198015d9/tenor.gif")
     .setColor("RED")
 	.setDescription("Persona de igual rango o mayor que tu.")	
-		
-    }else if 
-	(persona.roles.highest.comparePositionTo(message.member.roles.highest) > 0) { //Definimos la jerarquia de roles
-  return message.channel.send(jerarquia) //Enviamos embed
+  return msg.channel.send(mayor) //Enviamos embed
 }
 		
 	var razon = args.slice(1).join(' ')  //Definimos la variable que se usara para dar la razon del ban
@@ -532,27 +533,27 @@ if (!razon) {
 	
 	razon += ``
 	
-    const baneado = new Discord.MessageEmbed()   //Embed de informacion posterior al baneo
+    const baneado = new discord.MessageEmbed()   //Embed de informacion posterior al baneo
    .addField("Usuario Baneado", `${user.username}`)
    .addField("Razón", razon)
-   .addField("Canal", message.channel)
+   .addField("Canal", msg.channel)
    .setColor("RED")
    .setThumbnail(client.user.avatarURL())
-	message.channel.send(baneado)  //Enviamos EMBED
+	msg.channel.send(baneado)  //Enviamos EMBED
 	
-	message.guild.members.ban(persona, {             // Aca viene lo importante. Lo baneamos, ponemos de razon lo que esepcificamos antes y eliminamos su historial de mensaje en un lapso de 7 dias
+	msg.guild.members.ban(user, {             // Aca viene lo importante. Lo baneamos, ponemos de razon lo que esepcificamos antes y eliminamos su historial de mensaje en un lapso de 7 dias
   reason: razon,
   days: 7
 }) 
-   message.guild.members.unban(persona.id)  //Lo desbaneamos...
+   msg.guild.members.unban(user.id)  //Lo desbaneamos...
   
   
-		
+		///REVISAR LA PARTE DE DESBANEAMOS EN CASO DE QUE NO FUNCIONE, PORQUE ESTE TIPO PONE FALLAS PARA NO C&P
 
 	
 
 }
-})
+});
 
 
 

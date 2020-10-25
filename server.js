@@ -129,15 +129,64 @@ message.channel.send('¡Menciona a alguien!')
 
 let userm = message.mentions.users.first()//definimos un userm para la persona que menciono
 
-msg.channel.send({embed:{ description:"**" + message.author.username + "**" + " le dio un abrazo a " + "**" + userm.username + "**"//la descipcion si quieres puedes cambiarla
+msg.channel.send({embed:{ description:"**" + msg.author.username + "**" + " le dio un abrazo a " + "**" + member.username + "**"//la descipcion si quieres puedes cambiarla
 .setColor("RANDOM")//color random
 .setImage(enlace)//aqui en imagen ponemos el var enlace
 }})
-message.channel.send({embed});
 }
 }
 
 })
+
+client.on("message", msg =>{
+let gifs = ["", //Introducimos el link del gif
+            "",  //Al igual que aquí, también podemos agregar cuantos gifs queramos solamente agregando mas corchetes
+                  
+       
+      ];
+
+      let cap = gifs[Math.floor(gifs.length * Math.random())]; //Definimos Cap la cual se va a encargar de poner los gifs aleatoriamente utilizando Math
+if(msg.content.startsWith (prefix + "kiss")){
+//Ponemos para que al mencionar a alguien se ejecute el código  de gifs randoms
+      let pr = msg.mentions.users.first();
+      if (!pr) {
+        msg.reply("Debes mencionar a alguien OwO");
+      } else {
+//Hacemos el embed y agregamos .setImage y cap que es la encarga de poner los gifs aleatorios
+        const embed = new discord.MessageEmbed()
+          .setDescription(
+            "<" +
+              "@" +
+              msg.author.id +
+              ">" +
+              "  Besó a " +
+              "<" +
+              "@" +
+              xd.id +
+              ">" +
+              " <3"
+          )
+          .setImage(cap)
+          .setColor("RANDOM");
+
+        message.channel.send(embed);
+
+//Para las versiones 11 solo se cambia el MessageEmbed() por RichEmbed()
+      }}
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

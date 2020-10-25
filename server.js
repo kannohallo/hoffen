@@ -4,7 +4,7 @@
 
 
 
-
+const marsnpm = require ("marsnpm")
 var cheerio = require("cheerio");
 var request = require("request");
 // we've started you off with Express (https://expressjs.com/)
@@ -53,7 +53,7 @@ client.on("preparado", () => {
     "en desarollo",
     "gestionado por kanno",
     "para reportar escribe h!own",
-    "mi prefix es h!"
+    "mi prefix es h!", "Estoy en" + ${client.guilds.cache.size + "servidores, genial no?."
   ];
   setInterval(() => {
     const index = Math.floor(Math.random() * (actividades.length - 1) + 1);
@@ -343,24 +343,23 @@ if(msg.content.startsWith (prefix + "seenon")){ const args = msg.content.slice(p
         msg.channel.send(embed)
 }})
 
-client.on("message", msg =>{async function
+client.on("message", msg =>{
+    let url = marsnpm.cry(); //aqui se pone el tipo de reaccion que sera, cry, angry, etc.
 if(msg.conent.startsWith(prefix+"cry")){
-    let url = await marsnpm.cry(); //aqui se pone el tipo de reaccion que sera, cry, angry, etc.
-
 //Lo hacemos en un embed por que devuelve un link y quedaria mejor.
 //RichEmbed V11 o MessageEmbed v12
 
-    const embed = new Discord.RichEmbed()
-      .setTitle(`${message.author.username} se puso a llorar`) //Obtenemos el autor del mensaje, osea el que hizo el comando
+    const embed = new discord.RichEmbed()
+      .setTitle(`${msg.author.username} se puso a llorar`) //Obtenemos el autor del mensaje, osea el que hizo el comando
     .setColor("RANDOM")
     .setFooter("Que mal :(")
     .setTimestamp()
       .setImage(url); //agregamos lo que definimos mas arriba ( let url = await marsnpm.cry(); )
        
-    message.channel.send(embed);
+    msg.channel.send(embed);
 //Enviamos el embed  
 }
-})
+});
 
 
 

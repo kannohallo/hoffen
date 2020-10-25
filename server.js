@@ -693,7 +693,7 @@ mongoose.connect(
     });
   }
 );
-
+/*  PREGUNTAR A ALGUN DEVELOPER COMO SIGO CON ESTO
 client.on("message", msg => {
   const config = require(config.json);
   const prefix = config.json;
@@ -764,3 +764,10 @@ client.on("message", msg => {
     wc.save(); //guardamos
   }
 });
+*/
+
+
+
+
+
+

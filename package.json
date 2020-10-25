@@ -15,7 +15,9 @@
     "nekos.life": "^2.0.7",
     "request": "^2.88.2",
     "cheerio": "^0.22.0",
-    "marsnpm": "^0.4.5"
+    "marsnpm": "^0.4.5",
+    "mongodb": "^3.6.1",
+    "mongoose": "^5.10.10"
   },
   "engines": {
     "node": "12.x"

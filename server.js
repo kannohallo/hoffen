@@ -410,12 +410,37 @@ msg.channel.send(embed)
 client.on("message", msg =>{
  if(msg.content.startsWith(prefix+"sleep")){
   let url = marsnpm.sleep()
-  conat embed = 
-
-
-
-
+  const embed = new discord.RichEmbed()
+    .setTitle("parece que" + msg.author.username + "tiene tanto sueño que se dormir aqui mismo")
+    .setImage(url)
+    .setFooter("que descanses bien <3")
+msg.channel.send(embed)
 }})
+client.on("guildMemberAdd", async  member => {
+  
+let canal = client.channels.get('idelcanal'); 
+  
+let nameuser = member.user.username 
+let avatar = member.user.avatarURL
+ 
+let img = await marsnpm.bienvenida(avatar, nameuser)
+ canal.send({files: [img]}) 
+});
+
+client.on("message", msg =>{
+if(msg.content.startsWith(prefix + "avatar")){
+let avatar 
+
+
+
+
+
+
+
+
+}});
+
+
 
 
 

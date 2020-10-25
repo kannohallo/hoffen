@@ -765,9 +765,61 @@ client.on("message", msg => {
   }
 });
 */
-    client.on("message", msg => {
-if(msg.content.startsWith(prefix + "ship")){
+const discord = require("discord.js");
+const config = require("./config.json");
+const prefix = config.prefix;
+client.on("message", msg => {
+  if (msg.content.startsWith(prefix + "ship")) {
+    let users = msg.mentions.users.first();
+    if (!users) return msg.reply("Menciona a alguien porfavor!"); //Para que mencionen al usuario
+    if (users === msg.author)
+      return msg.channel.send("**No puedes hacer eso contigo mismo**");
+    if (users === client.user)
+      return msg.channel.send("**No puedo calcular eso conmigo!**");
 
-}})
+    const random = Math.floor(Math.random() * 100);
+    let heard = "";
 
+    if (random < 50) {
+      heard = ":broken_heart:";
+    } else if (random < 80) {
+      heard = ":sparkling_heart: "; // Un pequeÃ±o Match.Floor para hacerlo random y no de el mismo resultado!
+    } else if (random < 101) {
+      heard = ":heart:";
+    }
 
+    let resp = [
+      `El porcetanje de ${msg.author.username} & ${users.username} son:`,
+      `valla yo calculo que ${msg.author.username} & ${users.username} da a:`
+    ];
+
+    let msg = resp[Math.floor(Math.random() * resp.length)]; //Mensajes distintos si quieren ponerle diferentes mensajes!
+
+    const embed = new discord.MessageEmbed()
+      .setAuthor(`${msg}`)
+      .setDescription(`${heard} ${random} %${heard}`) //Resultado aleatorio de lo anterior estructurado
+      .setColor(0xff4d4d);
+    msg.channel.send(embed);
+  } //Cierre del comando!
+});
+
+client.on("message", msg => {
+  if (msg.contetn.startsWith(prefix + "svroles")) {
+    let id = msg.guild.id;
+    var server = msg.guild;
+    const embed = new discord.RichEmbed()
+
+      .setColor("RANDOM") //Definir el color del embed
+      .setThumbnail(server.iconURL) //Icono del Servidor
+      .setAuthor(server.name, server.iconURL) //Avatar, y nombre del servidor
+      .setDescription(
+        `${client.guilds
+          .get(id)
+          .roles.map(roles => `<@&${roles.id}>`)
+          .join("-")}`
+      ) //Llamamos la lista de roles
+      .setTitle("Lista de roles de " + msg.guild.name); //Titulo
+
+    msg.channel.send(embed);
+  }
+});

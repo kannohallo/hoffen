@@ -92,7 +92,7 @@ mongoose.connect(
     const token = config.token;
     const prefix = config.prefix;
     var member = discord.user;
-    client.login(token);
+    client.login("NzY5Njc3MzI0MjEwNzk4NjAy.X5Sf3g.eUmoa6agpNOCfbg-6iSep41Lb6U");
     const embed = new discord.MessageEmbed();
     client.on("preparado", () => {
       const actividades = [

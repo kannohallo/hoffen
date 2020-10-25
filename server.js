@@ -309,11 +309,11 @@ async function image(message){
 }})
 
 client.on("message", msg =>{
-if(msg.content.startsWith (prefix + "seenon")){
-        let user = message.mentions.users.first() ||
+if(msg.content.startsWith (prefix + "seenon")){ const args = msg.content.slice(prefix.length).trim().split(/ +/g);
+        let user = msg.mentions.users.first() ||
             client.users.resolve(args[0]) ||
             client.users.cache.find(x => (args) ? (args.join(" ") == x.tag) : undefined) ||
-            message.author; 
+            msg.author; 
 // Definimos "user" como el mencionado, o el de la ID, o el del tag, o el autor
 
         let page = !isNaN(args[1]) ?
@@ -331,16 +331,16 @@ if(msg.content.startsWith (prefix + "seenon")){
 
         }
 
-        if (!pages[page - 1]) return message.channel.send("Esa página no existe") // Si no existe la página retorna
+        if (!pages[page - 1]) return msg.channel.send("Esa página no existe") // Si no existe la página retorna
         
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new discord.MessageEmbed()
             .setColor("RANDOM")
             .setAuthor(`${user.tag} ha sido visto en:`, user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 }))
             .setDescription("```"+pages[page - 1]+"```") // Escogemos la página
-            .setFooter(`Página: ${page}/${pages.length} | ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true, format: "png", size: 1024 })) // La página donde estamos, y cuántas hay
+            .setFooter(`Página: ${page}/${pages.length} | ${msg.author.username}`, msg.author.displayAvatarURL({ dynamic: true, format: "png", size: 1024 })) // La página donde estamos, y cuántas hay
 
-        message.channel.send(embed)
+        msg.channel.send(embed)
 }})
 
 

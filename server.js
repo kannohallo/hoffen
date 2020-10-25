@@ -47,7 +47,7 @@ const token = config.token;
 const prefix = config.prefix;
 var member = discord.user;
 client.login(token);
-const embed = new discord.MessageEmbed()/
+const embed = new discord.MessageEmbed(); 
 client.on("preparado", () => {
   const actividades = [
     "en desarollo",
@@ -198,9 +198,162 @@ msg.channel.send(embed) //lo enviamos :3
 
 
 client.on("message", msg =>{
-if(m)
+if(msg.content.startsWith(prefix + "img")){
 
-})
+const Discord = require('discord.js');
+
+//Recordar instalar esas dependencias
+
+const cheerio = require('cheerio');
+ 
+const request = require('request');
+
+module.exports = {
+    run: async (bot, message, args) => {
+        if (!args[1]) return message.channel.send('Dame un resultado de búsqueda')
+        //Vamos a hacer esto mediante una función :)
+        image(message);
+    },
+    aliases: [],
+    description: "Random images",
+}
+
+async function image(message){ 
+    //argumentos
+    const args = message.content.split(" ");
+
+    //Establecer opciones de búsqueda
+    var options = {
+        url: "http://results.dogpile.com/serp?qc=images&q=" + args.slice(1).join(" "),
+        method: "GET",
+        headers: {
+            "Accept": "text/html",
+            "User-Agent": "Chrome"
+        }
+    };
+
+    //Llamar a request
+    request(options, async function(error, response, responseBody) {
+        if (error) {
+            return;
+        }
+        //Encontrar las imágenes....
+        $ = cheerio.load(responseBody);
+    
+        var links = $(".image a.link");
+        
+        //Crear las URLs
+        var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
+
+        //Si no encontró nada, regresar con ese mensaje
+        if (!urls.length) {
+            return message.channel.send("I didn't find anything.");
+        }
+
+
+        //Establecer mínimo y máximo para evitar errores en el colector
+        let i = 0;
+        let max = urls.length - 1;
+        //La mejor forma de hacer esto es por un embed :)
+        const embed = new Discord.MessageEmbed()
+        .setTitle("Image search: " + args.slice(1).join(" "))
+        .setDescription(`Use the reactions to move from one image to another`)
+        .setFooter(`${i + 1}/${max + 1}`)
+        .setImage(urls[i])
+        .setColor("RANDOM")
+
+        //Opciones de filtros
+        const filter = (reaction, user) => {
+            return ['◀️', '▶️', '⏹️'].includes(reaction.emoji.name) && user.id === message.author.id;
+        };
+
+        //Guardar el mensaje y reaccionar.
+        let msg = await message.channel.send(embed);
+        await msg.react('◀️');
+        await msg.react('▶️');
+        await msg.react('⏹️');
+
+        //Hora de encender el colector, si está inactivo por 20 segundos  finalizar.
+        let collector = msg.createReactionCollector(filter, { idle: 20000 })
+        collector.on('collect', async (reaction, user) => {
+            //Buscar cada reacción
+            if (reaction.emoji.name === '▶️') {
+                await reaction.users.remove(user.id);
+                if (max !== i){
+                    //Modificar el embed
+                    i++
+                    embed.setImage(urls[i])
+                    embed.setFooter(`${i + 1}/${max + 1}`)
+                    await msg.edit(embed);
+                }
+            }
+            if (reaction.emoji.name === '◀️') {
+                await reaction.users.remove(user.id);
+                if (i !== 0) {
+                    i--
+                    embed.setImage(urls[i])
+                    embed.setFooter(`${i + 1}/${max + 1}`)
+                    await msg.edit(embed);
+                }
+            }
+            if (reaction.emoji.name === '⏹️') {
+                //Detener el colector de manera voluntaria
+                collector.stop();
+            }
+        })
+        //Eliminar las reacciones
+        collector.on('end', collected => msg.reactions.removeAll())
+
+    });
+};
+}})
+
+client.on("message", msg =>{
+if(msg.content.startsWith (prefix + "seenon")){
+        let user = message.mentions.users.first() ||
+            client.users.resolve(args[0]) ||
+            client.users.cache.find(x => (args) ? (args.join(" ") == x.tag) : undefined) ||
+            message.author; 
+// Definimos "user" como el mencionado, o el de la ID, o el del tag, o el autor
+
+        let page = !isNaN(args[1]) ?
+            args[1] :
+            1
+// Si el argumento es un número coge el segundo argumento, si no, lo define como 1
+
+        let map = client.guilds.cache.filter(g => g.members.cache.has(user.id)).map(x => x.name) // El mapeo de servidores
+        let pages = [] // Un array vacío para poner las páginas
+
+        while (map.length > 0) {
+
+            pages.push(map.splice(0, 15)) 
+// Pusheamos los servidores con un límite de 15, el número pueden cambiarlo
+
+        }
+
+        if (!pages[page - 1]) return message.channel.send("Esa página no existe") // Si no existe la página retorna
+        
+
+        const embed = new Discord.MessageEmbed()
+            .setColor("RANDOM")
+            .setAuthor(`${user.tag} ha sido visto en:`, user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 }))
+            .setDescription("```"+pages[page - 1]+"```") // Escogemos la página
+            .setFooter(`Página: ${page}/${pages.length} | ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true, format: "png", size: 1024 })) // La página donde estamos, y cuántas hay
+
+        message.channel.send(embed)
+}})
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

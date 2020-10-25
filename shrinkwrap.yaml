@@ -2,6 +2,7 @@ dependencies:
   cheerio: 0.22.0
   discord.js: 12.4.1
   express: 4.17.1
+  marsnpm: 0.4.7
   nekos.life: 2.0.7
   request: 2.88.2
 packages:
@@ -399,6 +400,16 @@ packages:
       node: '>= 0.12'
     resolution:
       integrity: sha512-1lLKB2Mu3aGP1Q/2eCOx0fNbRMe7XdwktwOruhfqqd0rIJWwN4Dh+E3hrPSlDCXnSR7UtZ1N38rVXm+6+MEhJQ==
+  /form-data/2.5.1:
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      mime-types: 2.1.27
+    dev: false
+    engines:
+      node: '>= 0.12'
+    resolution:
+      integrity: sha512-m21N3WOmEEURgk6B9GLOE4RuWOFf28Lhh9qGYeNlGq4VDXUlJy2th2slBNU8Gp8EzloYZOibZJ7t5ecIrFSjVA==
   /forwarded/0.1.2:
     dev: false
     engines:
@@ -584,6 +595,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-G7nzFO9ri63tE7VJFpsqlF62jk0=
+  /marsnpm/0.4.7:
+    dependencies:
+      node-superfetch: 0.1.10
+    dev: false
+    resolution:
+      integrity: sha512-XSLI5hk55hxdGztjOYEoUJGbpHCYaLPnPDLPSpUXBGB2onPrIxYKnecIwLh1GRWtHkkUEuk2C2AIpsWm9F6xZg==
   /media-typer/0.3.0:
     dev: false
     engines:
@@ -659,6 +676,15 @@ packages:
       node: 4.x || >=6.0.0
     resolution:
       integrity: sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
+  /node-superfetch/0.1.10:
+    dependencies:
+      form-data: 2.5.1
+      node-fetch: 2.6.1
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-aM+4GmjwCSku1VLsVh/mjnxQHa3StRI8uB7eYSktstlMD6Dxvpk/tT6UFEg2NwlNPjLlwsFmexduNUahckCm2A==
   /nth-check/1.0.2:
     dependencies:
       boolbase: 1.0.0
@@ -963,5 +989,6 @@ specifiers:
   cheerio: ^0.22.0
   discord.js: ^12.4.0
   express: ^4.17.1
+  marsnpm: ^0.4.5
   nekos.life: ^2.0.7
   request: ^2.88.2

@@ -343,10 +343,24 @@ if(msg.content.startsWith (prefix + "seenon")){ const args = msg.content.slice(p
         msg.channel.send(embed)
 }})
 
+client.on("message", msg =>{async function
+if(msg.conent.startsWith(prefix+"cry")){
+    let url = await marsnpm.cry(); //aqui se pone el tipo de reaccion que sera, cry, angry, etc.
 
+//Lo hacemos en un embed por que devuelve un link y quedaria mejor.
+//RichEmbed V11 o MessageEmbed v12
 
-
-
+    const embed = new Discord.RichEmbed()
+      .setTitle(`${message.author.username} se puso a llorar`) //Obtenemos el autor del mensaje, osea el que hizo el comando
+    .setColor("RANDOM")
+    .setFooter("Que mal :(")
+    .setTimestamp()
+      .setImage(url); //agregamos lo que definimos mas arriba ( let url = await marsnpm.cry(); )
+       
+    message.channel.send(embed);
+//Enviamos el embed  
+}
+})
 
 
 

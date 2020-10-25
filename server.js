@@ -1,11 +1,18 @@
 // server.js
 // where your node app starts
 
+
+
+
+
+var cheerio = require("cheerio");
+var request = require("request");
 // we've started you off with Express (https://expressjs.com/)
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 const express = require("express");
 const app = express();
-
+const clientN = require("nekos.life") //requerimos nekos.life
+const neko = new clientN()//nuevo cliente de nekos.life
 // our default array of dreams
 const dreams = [
   "Find and count some sheep",
@@ -162,28 +169,38 @@ if(msg.content.startsWith (prefix + "kiss")){
               "  Besó a " +
               "<" +
               "@" +
-              xd.id +
+              msg.mentions.users.id +
               ">" +
               " <3"
           )
           .setImage(cap)
           .setColor("RANDOM");
 
-        message.channel.send(embed);
+        msg.channel.send(embed);
 
 //Para las versiones 11 solo se cambia el MessageEmbed() por RichEmbed()
       }}
 })
 
+client.on("message", msg =>{
+if(msg.content.startsWith (prefix + 'slap')) {
+let mention = msg.mentions.members.first() //el mencionado al que abofetearemos
+if(!mention) return msg.channel.send("Menciona a alguien") //si no hay mencionado retorna.
+  neko.sfw.slap().then(neko => { //el JSON que contiene la imagen o gif
+const embed = new discord.MessageEmbed()
+.setColor("RED")
+.setTitle(`${msg.member.displayName} cacheteo a ${mention.displayName}`)
+.setImage(neko.url) //url es el unico dato del JSON, asi que lo pedimos
+msg.channel.send(embed) //lo enviamos :3
+ })
+ }//cierra comando
+})
 
 
+client.on("message", msg =>{
+if(m)
 
-
-
-
-
-
-
+})
 
 
 

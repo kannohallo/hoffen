@@ -372,18 +372,23 @@ const embed = new discord.RichEmbed()
 msg.channel.send(embed)
 }})
 
+client.on("message", msg =>{if(msg.content.startsWith(prefix + "wasted")){
+let url = marsnpm.wasted(msg.author.avatarURL);
+msg.channel.send({files: [url]})
+}});
+
+client.on("message", msg => { if(msg.content.startsWith(prefix+"trump")){
+ const args = msg.content.split(" ");
+let trump = args.join(' ');
+let img = marsnpm.trump(trump)
+msg.channel.send({files: [img]})
+}});
+
 client.on("message", msg =>{
-let url = marsnpm
-
-
-
-
-
-
-
-
-
-})
+if(msg.content.startsWith(prefix+"rip")){
+let img = marsnpm.rip(msg.author.avatarURL)
+msg.channel.send({files: [img]})
+}});
 
 
 
